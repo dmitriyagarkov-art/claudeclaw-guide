@@ -224,22 +224,18 @@ apt-get install -y nodejs</div></div><p style="font-size:15px;color:var(--text-d
 <div class="result-block"><div class="result-label">Результат шага</div><div class="result-text">Claude отвечает «Привет!» — авторизация прошла, всё работает.</div></div></section>
 
   <section class="section" id="step-4"><div class="section-header"><span class="section-num">4</span><h2>Генерация проекта ClaudeClaw</h2></div><div class="section-time">~15–20 мин</div><div class="section-explain">Claude Code сам напишет весь код бота. Вы просто вставите промпт ClaudeClaw_prompt, а Claude сделает остальное.</div><div class="code-block"><div class="code-header"><span class="code-label">Создаём папку и запускаем</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">mkdir ~/claudeclaw && cd ~/claudeclaw
-claude</div></div><ul class="step-list"><li data-num="1.">Скачайте <strong>ClaudeClaw_prompt</strong> (кнопка внизу страницы)</li><li data-num="2.">Откройте и <strong>скопируйте весь текст</strong></li><li data-num="3.">Вставьте в консоль Claude Code</li><li data-num="4.">Claude прочитает промпт и <strong>задаст 4 вопроса</strong> для настройки бота. Отвечайте так:</li></ul>
+claude</div></div><ul class="step-list"><li data-num="1.">Скачайте <strong>ClaudeClaw_prompt</strong> (кнопка внизу страницы)</li><li data-num="2.">Откройте и <strong>скопируйте весь текст</strong></li><li data-num="3.">Вставьте в консоль Claude Code</li><li data-num="4.">Claude прочитает промпт и выдаст длинное описание возможностей бота. В конце он напишет что-то вроде <em>«Any questions before we get into the setup choices?»</em> — <strong>не пугайтесь, просто скопируйте и вставьте эту команду:</strong></li></ul>
 
-<div class="callout callout-info" style="margin:16px 0"><div class="callout-title">💬 Вопросы при установке</div>
-<p style="margin-bottom:12px"><strong>Platform?</strong> (какая платформа):</p>
-<div class="code-block"><div class="code-header"><span class="code-label">Ответ на Platform</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">telegram</div></div>
-<p style="margin-bottom:12px"><strong>Voice?</strong> (голосовые сообщения — распознавание через Groq):</p>
-<div class="code-block"><div class="code-header"><span class="code-label">Ответ на Voice</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">microphone</div></div>
-<p style="margin-bottom:12px"><strong>Memory?</strong> (система памяти — бот запоминает вас со временем):</p>
-<div class="code-block"><div class="code-header"><span class="code-label">Ответ на Memory</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">full</div></div>
-<p style="margin-bottom:12px"><strong>Features?</strong> (планировщик задач + автозапуск при перезагрузке сервера):</p>
-<div class="code-block"><div class="code-header"><span class="code-label">Ответ на Features</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">scheduler, service</div></div>
+<div class="code-block"><div class="code-header"><span class="code-label">Вставьте этот ответ</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">Platform: telegram. Voice: microphone. Memory: full. Features: scheduler, service. Go</div></div>
+
+<div class="callout callout-info" style="margin:16px 0"><div class="callout-title">💬 Что означают эти настройки</div>
+<p style="margin-bottom:10px"><strong>telegram</strong> — бот будет работать в Telegram</p>
+<p style="margin-bottom:10px"><strong>microphone</strong> — распознавание голосовых сообщений через Groq (бесплатно)</p>
+<p style="margin-bottom:10px"><strong>full</strong> — полная система памяти — бот запоминает вас со временем</p>
+<p><strong>scheduler, service</strong> — планировщик задач + автозапуск при перезагрузке сервера</p>
 </div>
 
-<ul class="step-list"><li data-num="5.">После ваших ответов Claude начнёт генерировать проект. <strong>Подождите 15–20 минут</strong> — не закрывайте консоль</li></ul>
-
-<div class="callout callout-warning"><div class="callout-title">⚠️ Не пугайтесь вопросов</div><p>Claude просто уточняет, какие модули включить в вашего бота. Отвечайте как указано выше — получите оптимальную конфигурацию.</p></div>
+<ul class="step-list"><li data-num="5.">После вашего ответа Claude начнёт генерировать проект. <strong>Подождите 15–20 минут</strong> — не закрывайте консоль</li></ul>
 
 <div class="callout callout-info" style="margin:16px 0"><div class="callout-title">⌨️ Подтверждения во время генерации</div><p>Пока Claude создаёт файлы проекта, он будет периодически останавливаться и <strong>запрашивать подтверждение</strong> — например, на создание или изменение файлов. Каждый раз просто <strong>нажимайте Enter</strong>, чтобы разрешить действие. Это нормальная часть процесса — Claude спрашивает разрешение перед каждой операцией с файлами. Не уходите далеко от консоли.</p></div>
 

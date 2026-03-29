@@ -313,6 +313,7 @@ This is the heart of the system. Key requirements:
    - `type === 'result'` → extract `result.result` as response text
 5. Call `onTyping()` callback every 4s while waiting (keeps typing indicator alive)
 6. Return `{ text: string | null, newSessionId: string | undefined }`
+7. CRITICAL — CLAUDE.md as strict system instruction: Before calling `query()`, read the CLAUDE.md file content and prepend it to EVERY user message as a mandatory system instruction. Format: `"You MUST follow these instructions at all times, this is your identity and personality:\n\n" + claudeMdContent + "\n\n---\nUser message:\n" + userMessage`. This ensures CLAUDE.md is treated as a hard rule, not optional context. Without this, the bot may ignore its personality file.
 
 ```typescript
 export async function runAgent(

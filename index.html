@@ -127,6 +127,8 @@
   @media(max-width:1024px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.menu-toggle{display:flex}.main{margin-left:0}.hero-visual{display:none}.hero{padding:60px 22px 40px}.section{padding:40px 22px}.footer{padding:40px 22px}.promo-banner{width:260px;padding:22px 16px}.main.shifted{margin-right:280px}}
   @media(max-width:600px){.stats-row{flex-direction:column}.stat-card{min-width:auto}.promo-banner{display:none}.main.shifted{margin-right:0}.section img{max-width:100%}}
   ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+  body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}
+  .code-content{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
   html{scroll-behavior:smooth}::selection{background:var(--lime);color:var(--bg)}
 </style>
 </head>
@@ -416,6 +418,12 @@ function toggleSidebar(){document.getElementById('sidebar').classList.toggle('op
 let promoClosed=false;
 function closePromo(){promoClosed=true;document.getElementById('promoBanner').classList.remove('visible');document.querySelector('.main').classList.remove('shifted')}
 window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=Math.min(100,Math.round(s/d*100));document.getElementById('progress-pct').textContent=p+'%';document.getElementById('progress-fill').style.width=p+'%';let c='';document.querySelectorAll('.section,.hero').forEach(el=>{if(el.id&&s>=el.offsetTop-120)c=el.id});document.querySelectorAll('.nav-item').forEach(i=>{i.classList.remove('active');const o=i.getAttribute('onclick');if(o&&o.includes("'"+c+"'"))i.classList.add('active')});if(!promoClosed){const pb=document.getElementById('promoBanner');const mn=document.querySelector('.main');if(p>=35&&p<=65){pb.classList.add('visible');mn.classList.add('shifted')}else{pb.classList.remove('visible');mn.classList.remove('shifted')}}})
+// Copy protection
+document.addEventListener('contextmenu',function(e){e.preventDefault()});
+document.addEventListener('keydown',function(e){if(e.ctrlKey&&(e.key==='c'||e.key==='C'||e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S'||e.key==='a'||e.key==='A')){e.preventDefault()}if(e.metaKey&&(e.key==='c'||e.key==='C'||e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S'||e.key==='a'||e.key==='A')){e.preventDefault()}if(e.key==='F12'){e.preventDefault()}if(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j')){e.preventDefault()}});
+document.addEventListener('dragstart',function(e){e.preventDefault()});
+document.addEventListener('selectstart',function(e){if(e.target.closest('.code-content'))return;e.preventDefault()});
+
 function downloadFile(t){let c,f;if(t==='claude'){c='# Мой Ассистент\n\nТы — [ИМЯ], AI-ассистент [ВАШЕ ИМЯ].\n\n## Кто вы\n\n[Описание]\n\n## Роли\n\n1. Второй мозг\n2. Стратег\n3. Организатор\n4. Копирайтер\n\n## Правила\n\n- Без AI-клише\n- Делай, не объясняй\n- Русский язык';f='CLAUDE_template.md'}else{c='TELEGRAM_BOT_TOKEN=токен\nALLOWED_CHAT_ID=id\nGROQ_API_KEY=ключ';f='.env.example'}const b=new Blob([c],{type:'text/plain'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=f;a.click();URL.revokeObjectURL(u)}
 </script>
 </body>

@@ -130,9 +130,38 @@
   body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}
   .code-content{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
   html{scroll-behavior:smooth}::selection{background:var(--lime);color:var(--bg)}
+  /* Password overlay */
+  .password-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(10,10,26,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:opacity .5s,visibility .5s}
+  .password-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
+  .password-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(212,250,39,.05)}
+  .password-box .lock-icon{font-size:48px;margin-bottom:20px}
+  .password-box h2{font-size:22px;font-weight:800;color:var(--lime);margin-bottom:8px}
+  .password-box .pw-desc{font-size:14px;color:var(--text-dim);margin-bottom:24px;line-height:1.6}
+  .password-box .pw-hint{font-size:12.5px;color:rgba(212,250,39,.5);margin-bottom:20px;line-height:1.5;font-style:italic}
+  .password-input{width:100%;padding:14px 18px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:16px;font-family:'Montserrat',sans-serif;outline:none;transition:border-color .2s;margin-bottom:14px;text-align:center;letter-spacing:2px}
+  .password-input:focus{border-color:var(--lime)}
+  .password-input::placeholder{color:var(--text-dim);letter-spacing:0}
+  .password-submit{width:100%;padding:14px;background:var(--lime);color:var(--bg);font-size:15px;font-weight:700;border:none;border-radius:12px;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s}
+  .password-submit:hover{opacity:.88;transform:translateY(-1px)}
+  .pw-error{color:#ff6b6b;font-size:13px;margin-top:10px;display:none}
 </style>
 </head>
 <body>
+
+<!-- Password overlay -->
+<div class="password-overlay" id="passwordOverlay">
+  <div class="password-box" style="max-width:460px;padding:52px 36px 40px">
+    <div style="font-size:clamp(24px,4vw,32px);font-weight:900;line-height:1.2;margin-bottom:8px"><span style="color:var(--lime)">ClaudeClaw</span><span style="color:#fff">: Интерактивное руководство</span></div>
+    <div style="font-size:13px;color:var(--text-dim);font-weight:500;letter-spacing:.3px;margin-bottom:16px">от <span style="color:var(--lime);font-weight:700">Dmitriymarketing</span></div>
+    <p style="font-size:clamp(13px,2vw,14.5px);color:var(--text-dim);font-weight:400;line-height:1.6;margin-bottom:24px">Создание своего ИИ-агента на базе Claude Code<br>с управлением через Telegram</p>
+    <p style="font-size:14px;font-weight:600;color:#fff;margin-bottom:8px">🔒 Это закрытый материал</p>
+    <p style="font-size:12.5px;color:rgba(255,255,255,.4);line-height:1.55;margin-bottom:6px;font-style:italic">Пароль находится в закрытом канале<br>«ИИ на практике 4.0» от Dmitriymarketing</p>
+    <p style="margin-bottom:26px"><a href="https://dmitriymarketing.com/chatgpt" target="_blank" style="color:var(--lime);font-size:13px;text-decoration:underline;text-underline-offset:3px;transition:opacity .2s" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Приобрести доступ к каналу</a></p>
+    <input type="password" class="password-input" id="passwordInput" placeholder="Введите пароль" autocomplete="off">
+    <button class="password-submit" id="passwordSubmit" onclick="checkPassword()">Войти</button>
+    <div class="pw-error" id="pwError">Неверный пароль. Попробуйте ещё раз.</div>
+  </div>
+</div>
 <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header"><div class="sidebar-logo">🤖 ClaudeClaw</div><div class="sidebar-sub">Пошаговый гайд</div></div>
@@ -411,6 +440,11 @@ EOF</div></div><div class="code-block"><div class="code-header"><span class="cod
 </div>
 
 <script>
+// Password protection
+const PASS_HASH='aipractice2026';
+function checkPassword(){const inp=document.getElementById('passwordInput').value;if(inp===PASS_HASH){document.getElementById('passwordOverlay').classList.add('hidden');document.body.style.overflow='';sessionStorage.setItem('claw_auth','1')}else{document.getElementById('pwError').style.display='block';document.getElementById('passwordInput').value='';document.getElementById('passwordInput').focus()}}
+document.addEventListener('DOMContentLoaded',function(){if(sessionStorage.getItem('claw_auth')==='1'){document.getElementById('passwordOverlay').classList.add('hidden')}else{document.body.style.overflow='hidden'}document.getElementById('passwordInput').addEventListener('keydown',function(e){if(e.key==='Enter')checkPassword()})});
+
 function copyCode(b){const c=b.closest('.code-block').querySelector('.code-content').textContent;navigator.clipboard.writeText(c).then(()=>{b.classList.add('copied');b.innerHTML='✅ Скопировано';setTimeout(()=>{b.classList.remove('copied');b.innerHTML='📋 Скопировать'},2000)})}
 function toggleAccordion(b){b.classList.toggle('open');b.nextElementSibling.classList.toggle('open')}
 function navTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));event.target.classList.add('active');document.getElementById('sidebar').classList.remove('open')}

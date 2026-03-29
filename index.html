@@ -308,9 +308,20 @@ EOF</div></div><div class="code-block"><div class="code-header"><span class="cod
 
 <img src="screen-bot-running.png" alt="ClaudeClaw запущен и работает" style="width:100%;border-radius:10px;border:1px solid var(--border);margin:16px 0">
 
-<div class="callout callout-success"><div class="callout-title">✅ Проверка</div><p>Напишите боту в Telegram. Ответил — работает! <code>Ctrl+C</code> → <code>exit</code> обратно в root.</p></div><div class="result-block"><div class="result-label">Результат шага</div><div class="result-text">Бот отвечает в Telegram. Пользователь claw создан.</div></div></section>
+<div class="callout callout-success"><div class="callout-title">✅ Проверка</div><p>Напишите боту в Telegram. Если он ответил — всё работает!</p></div>
 
-  <section class="section" id="step-8"><div class="section-header"><span class="section-num">8</span><h2>Настройка автозапуска (24/7)</h2></div><div class="section-time">~5 мин</div><div class="section-explain">Настроим, чтобы бот работал постоянно и перезапускался при сбоях.</div><div class="code-block"><div class="code-header"><span class="code-label">Создание сервиса</span><span class="code-where">Под root</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">cat > /etc/systemd/system/claudeclaw.service << 'EOF'
+<div class="sub-heading">Останавливаем бота и выходим</div>
+<p style="font-size:15px;color:var(--text-dim);margin-bottom:14px">Бот работает — мы это проверили. Теперь остановим его (на следующем шаге настроим автозапуск). Нажмите <strong>Ctrl+C</strong> в консоли, чтобы остановить бота. Потом выходим обратно на root:</p>
+
+<div class="code-block"><div class="code-header"><span class="code-label">Выходим обратно на root</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">exit</div></div>
+
+<div class="result-block"><div class="result-label">Результат шага</div><div class="result-text">Бот отвечает в Telegram. Пользователь claw создан. Вы снова под root.</div></div></section>
+
+  <section class="section" id="step-8"><div class="section-header"><span class="section-num">8</span><h2>Настройка автозапуска (24/7)</h2></div><div class="section-time">~5 мин</div><div class="section-explain">Настроим, чтобы бот работал постоянно и перезапускался при сбоях.</div>
+
+<div class="callout callout-warning"><div class="callout-title">⚠️ Убедитесь</div><p>Вы должны быть под <strong>root</strong> (не под claw). Если в консоли написано <code>claw@...</code> — введите <code>exit</code>. Также бот должен быть <strong>остановлен</strong> (Ctrl+C на предыдущем шаге).</p></div>
+
+<div class="code-block"><div class="code-header"><span class="code-label">Создание сервиса</span><span class="code-where">Под root</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">cat > /etc/systemd/system/claudeclaw.service << 'EOF'
 [Unit]
 Description=ClaudeClaw Telegram Bot
 After=network.target

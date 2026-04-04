@@ -565,6 +565,7 @@ export function computeNextRun(cronExpression: string): number
 - `getDueTasks()` → tasks where `status='active'` and `next_run <= now`
 - For each: notify start, `runAgent(task.prompt)`, send result, compute next run, `updateTaskAfterRun()`
 - `computeNextRun`: use `cron-parser` → `CronExpression.parse(expr).next().getTime() / 1000`
+- **CRITICAL**: `cron-parser` is a CommonJS package. Since this project uses `"type": "module"`, you MUST use a default import: `import cronParser from 'cron-parser'` then destructure: `const { parseExpression } = cronParser`. NEVER use `import { parseExpression } from 'cron-parser'` — it will crash at runtime with `SyntaxError: Named export 'parseExpression' not found`.
 
 ### `src/schedule-cli.ts` (if `scheduler` selected)
 

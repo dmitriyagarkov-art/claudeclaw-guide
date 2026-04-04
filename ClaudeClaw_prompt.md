@@ -216,6 +216,28 @@ Optional: TTS synthesis before sending
 - Scheduler: `cron-parser`
 - WhatsApp: `whatsapp-web.js`, `qrcode-terminal`
 
+**CRITICAL — ESM/CommonJS compatibility**: This project uses `"type": "module"` and `"module": "NodeNext"`. Several dependencies (`pino`, `cron-parser`, `better-sqlite3`, `qrcode-terminal`) are CommonJS packages. When importing them, NEVER use named imports directly. Use default import + destructure pattern:
+```typescript
+// ✅ CORRECT — works in ESM with CommonJS packages
+import pkg from 'cron-parser'
+const { parseExpression } = pkg
+
+// ❌ WRONG — crashes at runtime: "Named export not found"
+import { parseExpression } from 'cron-parser'
+```
+For packages used as a single callable (like `pino`, `better-sqlite3`), use:
+```typescript
+// ✅ CORRECT
+import pino from 'pino'
+const createLogger = pino.default ?? pino
+export const logger = createLogger({ ... })
+
+// ❌ WRONG — TS2349: "This expression is not callable"
+import pino from 'pino'
+export const logger = pino({ ... })
+```
+Apply this pattern to ALL CommonJS dependencies. When in doubt, use the `default ?? original` pattern.
+
 ---
 
 ## STEP 3 — File structure to create
@@ -290,7 +312,8 @@ Also export:
 ### `src/logger.ts`
 ```typescript
 import pino from 'pino'
-export const logger = pino({
+const createLogger = pino.default ?? pino
+export const logger = createLogger({
   level: process.env.LOG_LEVEL ?? 'info',
   transport: process.env.NODE_ENV !== 'production'
     ? { target: 'pino-pretty', options: { colorize: true } }
@@ -324,6 +347,14 @@ export async function runAgent(
 ```
 
 ### `src/db.ts`
+**CRITICAL**: `better-sqlite3` is a CommonJS package. Import it as:
+```typescript
+import Database from 'better-sqlite3'
+const BetterSqlite3 = (Database as any).default ?? Database
+const db = new BetterSqlite3(dbPath)
+```
+NEVER use `new Database(dbPath)` directly — it will fail with "This expression is not callable" in ESM mode.
+
 SQLite schema. Always include:
 
 **Table: `sessions`**
@@ -861,6 +892,8 @@ Write files in this order so each file's dependencies exist before it's referenc
 9. **launchd `KeepAlive`**: Set `ThrottleInterval` to at least 5 seconds to prevent rapid crash-restart loops from hammering the system. Without it, a crash loop can make the machine unresponsive.
 
 10. **OGA vs OGG**: Telegram sends voice notes as `.oga` files. Groq Whisper doesn't accept `.oga`. Rename to `.ogg` before sending — the format is identical, just the extension matters.
+
+11. **ESM/CommonJS import crashes**: The project is `"type": "module"` but several core dependencies (`pino`, `better-sqlite3`, `cron-parser`, `qrcode-terminal`) are CommonJS. Using `import { X } from 'pkg'` or calling default imports directly (e.g. `pino({...})`, `new Database(...)`) WILL crash at runtime. Always use the `const X = pkg.default ?? pkg` pattern shown in the CRITICAL notes above. This is the #1 cause of "bot won't start" issues.
 
 ---
 

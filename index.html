@@ -181,7 +181,7 @@
     <button class="nav-item" onclick="navTo('step-9')">Шаг 9: Личность бота</button>
     <button class="nav-item" onclick="navTo('step-10')">Шаг 10: VS Code</button>
     <button class="nav-item" onclick="navTo('skills')">Скиллы</button>
-    <button class="nav-item" onclick="navTo('bonus')">Оплата Claude из РФ</button>
+    <button class="nav-item" onclick="navTo('bonus')">Оплата из РФ</button>
     <button class="nav-item" onclick="navTo('management')">Управление</button>
     <button class="nav-item" onclick="navTo('files')">Скачать файлы</button>
     <button class="nav-item" onclick="navTo('faq')">FAQ</button>
@@ -396,11 +396,15 @@ EOF</div></div><div class="code-block"><div class="code-header"><span class="cod
 <div class="callout callout-warning"><div class="callout-title">💡 Идеи скиллов</div><p>Копирайтер, аналитик конкурентов, SMM-менеджер, email-маркетолог, генератор хуков, ДНК клиента — любая роль, которую вы хотите дать боту. Один скилл = один файл.</p></div>
 <div class="result-block"><div class="result-label">Результат шага</div><div class="result-text">У бота появился новый навык. Отправьте ему задачу по теме скилла — он подключит его автоматически.</div></div></section>
 
-  <section class="section" id="bonus"><div class="section-header"><span class="section-num">💳</span><h2>Оплатить Claude из РФ</h2></div>
+  <section class="section" id="bonus"><div class="section-header"><span class="section-num">💳</span><h2>Оплата из РФ</h2></div>
 <div class="section-explain">Если у вас нет аккаунта Claude, или нужна иностранная почта и карта для оплаты — это легко решается с помощью проверенного сервиса.</div>
 <img src="screen-pay-claude.png" alt="Оплата Claude с русской карты" style="width:100%;border-radius:10px;border:1px solid var(--border);margin:16px 0">
 <p style="font-size:15px;color:var(--text-dim);margin:14px 0"><strong><a href="https://t.me/dmitriy_market_bot?start=r_47197755" target="_blank" class="inline-link">Оплатить подписку Claude через бота →</a></strong></p>
 <p style="font-size:15px;color:var(--text-dim);margin:14px 0">Ребята проверенные — рекомендую их своим студентам для оплаты подписок Claude, ChatGPT и других сервисов. Помогут с полного нуля: создадут аккаунт, настроят почту и оплатят подписку.</p>
+
+<div class="sub-heading" style="margin-top:28px">Как оплатить аренду сервера зарубежной картой</div>
+<p style="font-size:15px;color:var(--text-dim);margin:14px 0">Вот бот для создания зарубежной карты, с помощью которого можно создать себе карту, выпустить её и оплачивать любые сервисы.</p>
+<p style="font-size:15px;color:var(--text-dim);margin:14px 0"><strong><a href="https://t.me/zarub_robot?start=ref_9phCoT" target="_blank" class="inline-link">Перейти в бота для создания зарубежной карты →</a></strong></p>
 </section>
 
   <section class="section" id="management"><div class="section-header"><span class="section-num">⚙️</span><h2>Управление ботом</h2></div><p class="section-desc">Команды для консоли DigitalOcean или терминала VS Code.</p><div class="code-block"><div class="code-header"><span class="code-label">Перезапуск</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">systemctl restart claudeclaw</div></div><div class="code-block"><div class="code-header"><span class="code-label">Статус</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">systemctl status claudeclaw</div></div><div class="code-block"><div class="code-header"><span class="code-label">Логи</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">journalctl -u claudeclaw -f</div></div><div class="code-block"><div class="code-header"><span class="code-label">Остановка</span><button class="copy-btn" onclick="copyCode(this)">📋 Скопировать</button></div><div class="code-content">systemctl stop claudeclaw</div></div><div class="callout callout-info"><div class="callout-title">📝 БЕЗ перезапуска</div><p><strong>CLAUDE.md</strong> и <strong>скиллы</strong> подхватываются автоматически.</p></div><div class="callout callout-warning"><div class="callout-title">🔄 ТРЕБУЕТ перезапуска</div><p><strong>.env</strong> и код (<code>src/</code>).</p></div></section>
